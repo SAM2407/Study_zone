@@ -1,0 +1,134 @@
+*{
+    margin: 0;
+    padding:0;
+}
+body{
+    background-image: url(./images/signup.jpeg);
+    background-size: cover;  
+    background-repeat: no-repeat; 
+    height: 100vh; 
+    width: 100%;
+
+}
+.nav{
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.navimg{
+height: 60px;
+width: auto;
+border-radius: 50%;
+}
+.navlinks{
+    display: flex;
+    gap: 15px;
+}
+.navlinks a{
+    color: rgb(247, 160, 67);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100px;
+}
+.footer {
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end; 
+    width: auto; 
+    min-width: 250px; 
+}
+.box1{
+    margin: 20px;
+    padding: 20px;
+    flex: 1;
+}
+.footer a{
+    color: rgb(247, 160, 67);
+    text-decoration: line;
+    display: inline-block;
+    margin: 10 0;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100px;
+}
+.footer .box1{
+
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+ .bottom{
+    color: rgb(247, 160, 67);
+    text-align: left; 
+    margin-left: 20px;
+}
+.container {
+    width: 700px; 
+    height: 400px; 
+    padding: 40px;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px; 
+}
+
+
+
+.form-box {
+    width: 250px;
+    height:330px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(250, 4, 4, 0.947);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color:  rgb(247, 160, 67);
+}
+
+.input {
+    margin-bottom: 15px;
+    width: 90%;
+}
+
+.input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ee1c1c;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn {
+    width: 50%;
+    padding: 10px;
+    background: #667eea;
+    border: none;
+    color:rgb(234, 241, 233);
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #ee0e0e;
+}
+.toggle-text{
+    color: rgb(247, 160, 67);
+}
