@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url(./images/background.jpg);
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.nav {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #706f6f;
+    padding: 0 20px;
+    color: rgb(20, 19, 19);
+    box-sizing: border-box;
+}
+
+.navimg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.navlinks {
+    display: flex;
+    gap: 15px;
+}
+
+.navlinks a {
+    color: rgb(12, 220, 247);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    
+}
+
+.navlinks a:hover {
+    text-decoration: underline;
+}
+
+.Create_group {
+    background-color: #ffcc00;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.Create_group:hover {
+    transform: scale(1.1);
+    background-color: #e6b800;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: rgb(11, 11, 11);
+    font-size: 16px;
+    cursor: pointer;
+}
+/* Hero Section */
+.hero {
+    background: rgba(0, 0, 0, 0.5) url('./images/hero-background.jpg') center/cover no-repeat;
+    padding: 80px 20px;
+    text-align: center;
+    color: white;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.hero .btn-primary {
+    background-color: #ffcc00;
+    padding: 10px 25px;
+    font-size: 16px;
+    color: rgb(23, 21, 21);
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.hero .btn-primary:hover {
+    background-color: #e6b800;
+    transition: background-color 0.3s;
+}
+
+/* Cards Section */
+.cards-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+.cards-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.card .btn-card {
+    background-color: #ffcc00;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: black;
+    transition: background-color 0.3s;
+}
+
+.card .btn-card:hover {
+    background-color: #e6b800;
+}
+
+
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    background-color: #333;
+    color: white;
+    flex-wrap: wrap;
+    height: auto;
+    width: 100%;
+    margin-top: auto;
+    box-sizing: border-box;
+}
+
+.footer .box1, .footer .box2, .footer .box3 {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+}
+
+.footer a {
+    color: #f4f4f4;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.footer a:hover {
+    color: #ffcc00;
+}
+
+.footer .box3 h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.footer .ftimg {
+    width: 30px;
+    margin-right: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.footer .ftimg:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer .box1, .footer .box2, .footer .box3 {
+        flex: none;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .footer .ftimg {
+        margin-right: 8px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+  }
