@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Group | Study Zone</title>
+    <link rel="icon" href="../images/logo.jpg"  type="logo">
+ <link rel="stylesheet" href="createGroup.css">
+</head>
+<body>
+<div class="nav">
+       <a href="home.html">  <img src="../images/logo.jpg" alt="page_logo" class=" navimg"></a>
+        <div class=" navlinks">
+            <a href="home.html" class="home">Home</a>
+            <a href="" class="Resources"> Resources</a>
+            <a href="" class="Blogs"> Blogs</a>
+            <a href="" class="contactus"> Contact Us</a>
+            <a href="login.html" class="login">Login</a>
+        </div>
+    </div>
+  <div class="container">
+    <h2>Create a New Group</h2>
+    <form action="#" method="POST" enctype="multipart/form-data">
+      
+      <label for="groupName">Group Name</label>
+      <input type="text" id="groupName" name="groupName" required>
+
+      <label for="description">Group Description</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+
+      <label>Group Type</label>
+      <div class="group-type">
+        <label><input type="radio" name="groupType" value="public" required> Public</label>
+        <label><input type="radio" name="groupType" value="private"> Private</label>
+        <label><input type="radio" name="groupType" value="invite"> Invite-only</label>
+      </div>
+
+      <label for="tags">Tags / Interests</label>
+      <input type="text" id="tags" name="tags" placeholder="e.g. DSA, OS, DBMS">
+
+      <div class="upload-section">
+        <label for="groupIcon">Upload Group Icon</label>
+        <input type="file" id="groupIcon" name="groupIcon" accept="image/*">
+      </div>
+
+      <button type="submit">Create Group</button>
+    </form>
+  </div>
+  <div class="footer">
+        <div class=" box1">
+                <a href="" class="Aboutus"> About Us</a>
+                <a href=""class="Blogs">Blogs</a>
+                <a href="" class="contactus">Contact Us</a>
+                <a href=""class="groups">Study Groups</a>
+        </div>
+        <div class="box2">
+            <a href=""class="tips">Study Tips</a>
+            <a href="" class="materials">Study Materials</a>
+            <a href=""class="Questions">FAQs</a>
+            <a href=""class="policy">Private Policy</a>
+        </div>
+        <div class="box3"> 
+            <h2>Follow Us</h2>
+        </br>
+        <img src="../images/instagrame.png" alt="instagram" class="ftimg">
+        <img src="../images/facebook.png" alt="Facebook" class="ftimg">
+        <img src="../images/youtube.png" alt="Youtube" class="ftimg">
+        <img src="../images/twitter.png" alt="Twitter" class="ftimg">
+        </div>
+    </div>
+
+</body>
+</html>
