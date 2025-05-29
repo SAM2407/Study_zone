@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Zone - PDF Resources</title>
+  <link rel="stylesheet" href="resources.css">
+</head>
+<body>
+  <div class="nav">
+    <a href="home.html"><img src="../images/logo.jpg" alt="page_logo" class="navimg"></a>
+    <button id="Create_group">Create a group</button>
+    <div class="navlinks">
+      <a href="home.html">Home</a>
+      <a href="resources.html">Resources</a>
+      <a href="#">Blogs</a>
+      <a href="#">Contact Us</a>
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div id="uploadAndListBlock">
+      <form id="resourceForm">
+        <h2 class="section-title">Upload PDF Resource</h2>
+        <label for="resourceTitle">Title:</label>
+        <input type="text" id="resourceTitle" placeholder="Enter PDF title" required />
+
+        <label for="resourceFile">Select PDF:</label>
+        <input type="file" id="resourceFile" accept="application/pdf" required />
+
+        <button type="submit">Add Resource</button>
+      </form>
+
+      <div id="resourceList">
+        <h2 class="section-title">Resources List</h2>
+        <p  class="para">No PDFs uploaded yet.</p>
+      </div>
+    </div>
+
+    <div id="pdfPreviewContainer">
+      <div id="pdfPreview">
+        <h2 class="Preview">Click “Preview” to view a PDF</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="box1">
+      <a href="#">About Us</a>
+      <a href="#">Blogs</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Study Groups</a>
+    </div>
+    <div class="box2">
+      <a href="#">Study Tips</a>
+      <a href="#">Study Materials</a>
+      <a href="#">FAQs</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="box3">
+      <h2>Follow Us</h2><br>
+      <img src="../images/instagrame.png" alt="Instagram" class="ftimg">
+      <img src="../images/facebook.png" alt="Facebook" class="ftimg">
+      <img src="../images/youtube.png" alt="YouTube" class="ftimg">
+      <img src="../images/twitter.png" alt="Twitter" class="ftimg">
+    </div>
+  </div>
+
+<script src="resources.js"></script>
+
+</body>
+</html>
