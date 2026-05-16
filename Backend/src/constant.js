@@ -1,0 +1,1 @@
+export const DB_NAME = "write your db name here "

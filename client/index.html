@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/images/logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+      /* Critical CSS to prevent layout shifts and giant icons */
+      :root { background: #0f0f1a; color: #fff; }
+      body { margin: 0; padding: 0; background: #0f0f1a; overflow-x: hidden; }
+      img, svg, i { max-width: 100%; height: auto; }
+      
+      /* Initial state for icons/images to prevent massive scaling before JS/CSS loads */
+      .navimg, .ftimg, img { width: 50px; height: auto; }
+      
+      #splash-screen {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: #0f0f1a; z-index: 10000; display: flex;
+        flex-direction: column; align-items: center; justifyContent: center;
+        transition: opacity 0.4s ease;
+      }
+      .splash-logo { width: 80px; height: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
+      @keyframes pulse { 0% { opacity: 0.5; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } 100% { opacity: 0.5; transform: scale(0.95); } }
+    </style>
+    <title>StudyZone — Collaborative Learning</title>
+  </head>
+  <body>
+    <div id="splash-screen">
+      <div class="splash-logo" style="background: #0cdcf7; border-radius: 50%;"></div>
+      <div style="color: #0cdcf7; font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: bold;">Study Zone</div>
+    </div>
+    <div id="root"></div>
+    <script>
+      // Hide splash screen when React is ready (called from main.jsx)
+      window.hideSplash = function() {
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+          splash.style.opacity = '0';
+          setTimeout(() => splash.remove(), 400);
+        }
+      };
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
