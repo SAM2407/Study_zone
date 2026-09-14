@@ -35,23 +35,6 @@ export const initSocket = (server) => {
             } else {
                 // Room exists. Only allow host status if this is the original host reconnecting
                 const room = rooms[roomName];
-                
-                // Room exists — kick duplicate connections for same userId
-                const existingSockets = Object.keys(room.members).filter(
-                    id => room.members[id].userId === userId
-                );
-
-                existingSockets.forEach(id => {
-                    delete room.members[id];
-                    room.allowedUsers.delete(id);
-                    io.to(roomName).emit("user-left", { socketId: id, userId });
-
-                    const oldSocket = io.sockets.sockets.get(id);
-                    if (oldSocket) {
-                        oldSocket.isBeingReplaced = true; // flag so disconnect skips cleanup
-                        oldSocket.disconnect(true);
-                    }
-                });
 
                 if (isHost || room.hostUserId === userId) {
                     // Reclaiming host status or verified as host by frontend
