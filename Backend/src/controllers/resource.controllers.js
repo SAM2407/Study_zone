@@ -132,13 +132,31 @@ export const proxyPdf = asyncHandler(async (req, res) => {
     }
 
     try {
-        // Cloudinary handles format conversion automatically if we just change the extension.
-        // If the user wants to view it in the iframe, redirecting to the raw URL is the most reliable way 
-        // since these are uploaded as public assets, not private/authenticated ones.
-        let targetUrl = resource.fileUrl;
+        const targetUrl = resource.fileUrl;
         
-        // If it's a whiteboard image, we might want to ensure it displays nicely, but the raw URL works best.
-        res.redirect(targetUrl);
+        // If it's a PDF, redirect directly so the browser's PDF viewer handles it
+        if (targetUrl.toLowerCase().endsWith('.pdf')) {
+            return res.redirect(targetUrl);
+        }
+
+        // For whiteboard snapshots (PNGs) and other images, return an HTML wrapper.
+        // This solves two problems:
+        // 1. Transparent PNG backgrounds rendering as completely white/invisible
+        // 2. Strict browsers (like Brave) blocking 302 redirects to images inside iframes
+        res.send(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    body { margin: 0; background-color: #111; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: auto; }
+                    img { max-width: 100%; max-height: 100%; object-fit: contain; background-color: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+                </style>
+            </head>
+            <body>
+                <img src="${targetUrl}" alt="${resource.title}" />
+            </body>
+            </html>
+        `);
     } catch (err) {
         console.error("PDF Redirect Error:", err);
         res.status(500).send("Error generating secure link");
