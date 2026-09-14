@@ -87,8 +87,14 @@ export const sendVerificationOTP = asyncHandler(async (req, res) => {
     }
 
     // generate 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    let otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    // DEMO ACCOUNT BYPASS
+    const isDemoAccount = email.toLowerCase().endsWith("@demo.com");
+    if (isDemoAccount) {
+        otp = "123456";
+    }
 
     // save or update unverified user
     let user = await User.findOne({ email: email.toLowerCase() });
@@ -114,13 +120,17 @@ export const sendVerificationOTP = asyncHandler(async (req, res) => {
         });
     }
 
-    // send OTP email
-    try {
-        await sendOTP(email, otp, name);
-    } catch (err) {
-        console.error("Nodemailer failed to send OTP:", err);
-        await User.findByIdAndDelete(user._id);
-        throw new ApiError(500, "Could not send OTP email. Please check your email address and try again.");
+    // send OTP email (Skip if demo account)
+    if (isDemoAccount) {
+        console.log(`[DEMO MODE] Skipped email for ${email}. OTP is ${otp}`);
+    } else {
+        try {
+            await sendOTP(email, otp, name);
+        } catch (err) {
+            console.error("Resend API failed to send OTP:", err);
+            await User.findByIdAndDelete(user._id);
+            throw new ApiError(500, "Could not send OTP email. Please check your email address and try again.");
+        }
     }
 
 
