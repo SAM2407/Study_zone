@@ -115,9 +115,11 @@ export const sendVerificationOTP = asyncHandler(async (req, res) => {
     try {
         await sendOTP(email, otp, name);
     } catch (err) {
+        console.error("Nodemailer failed to send OTP:", err);
         await User.findByIdAndDelete(user._id);
         throw new ApiError(500, "Could not send OTP email. Please check your email address and try again.");
     }
+
 
     return res.status(200).json(
         new ApiResponse(200, { email }, "OTP sent to your email. Please verify.")
