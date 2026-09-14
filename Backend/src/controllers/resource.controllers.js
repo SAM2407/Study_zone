@@ -132,21 +132,15 @@ export const proxyPdf = asyncHandler(async (req, res) => {
     }
 
     try {
-        // Extract public_id correctly from the Cloudinary URL
-        const urlParts = resource.fileUrl.split('/');
-        const fileNameWithExt = urlParts[urlParts.length - 1];
-        const folder = urlParts[urlParts.length - 2];
-        const publicId = `${folder}/${fileNameWithExt.split('.')[0]}`;
+        // Cloudinary handles format conversion automatically if we just change the extension.
+        // If the user wants to view it in the iframe, redirecting to the raw URL is the most reliable way 
+        // since these are uploaded as public assets, not private/authenticated ones.
+        let targetUrl = resource.fileUrl;
         
-        // Generate a high-security private download URL
-        const signedUrl = cloudinary.utils.private_download_url(publicId, 'pdf', {
-            resource_type: resource.fileUrl.includes('/raw/') ? 'raw' : 'image',
-            expires_at: Math.floor(Date.now() / 1000) + 3600 // 1 hour
-        });
-
-        res.redirect(signedUrl);
+        // If it's a whiteboard image, we might want to ensure it displays nicely, but the raw URL works best.
+        res.redirect(targetUrl);
     } catch (err) {
-        console.error("PDF Sign Error:", err);
+        console.error("PDF Redirect Error:", err);
         res.status(500).send("Error generating secure link");
     }
 });
