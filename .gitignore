@@ -1,7 +1,7 @@
 node_modules/
 .env
 .env.local
-.env.production
+# .env.production is intentionally committed — contains only public API URL for Vite build
 dist/
 *.log
 .DS_Store
