@@ -20,8 +20,12 @@ const allowedOrigins = [
 app.use(
     cors({
         origin: (origin, callback) => {
-            // Allow requests with no origin (mobile apps, curl, Render health checks)
-            if (!origin || allowedOrigins.includes(origin)) {
+            // Allow: no origin (curl/Render health checks), exact matches, OR any Vercel preview URL for this project
+            if (
+                !origin ||
+                allowedOrigins.includes(origin) ||
+                /https:\/\/study-zone[^.]*\.vercel\.app$/.test(origin)
+            ) {
                 callback(null, true);
             } else {
                 callback(new Error(`CORS blocked: ${origin}`));
