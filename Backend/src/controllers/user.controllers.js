@@ -19,38 +19,41 @@ const generateToken = (userId, rememberMe = false) => {
 };
 
 /* ========================
-   EMAIL TRANSPORTER
-======================== */
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
-
-/* ========================
-   SEND OTP HELPER
+   SEND OTP HELPER (Using Resend API)
 ======================== */
 const sendOTP = async (email, otp, name) => {
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "Study Zone — Email Verification OTP",
-        html: `
-            <div style="font-family:Arial,sans-serif; max-width:500px; margin:auto; padding:20px; background:#f4f4f4; border-radius:10px;">
-                <h2 style="color:#1e3a8a;">Study Zone Email Verification</h2>
-                <p>Hi <strong>${name}</strong>,</p>
-                <p>Your OTP to verify your email is:</p>
-                <div style="font-size:36px; font-weight:bold; letter-spacing:10px; text-align:center; color:#1e3a8a; background:white; padding:20px; border-radius:8px; margin:15px 0;">
-                    ${otp}
-                </div>
-                <p style="color:#666; font-size:13px;">This OTP expires in <strong>10 minutes</strong>.</p>
-                <p style="color:#666; font-size:13px;">If you didn't request this, ignore this email.</p>
+    const htmlContent = `
+        <div style="font-family:Arial,sans-serif; max-width:500px; margin:auto; padding:20px; background:#f4f4f4; border-radius:10px;">
+            <h2 style="color:#1e3a8a;">Study Zone Email Verification</h2>
+            <p>Hi <strong>${name}</strong>,</p>
+            <p>Your OTP to verify your email is:</p>
+            <div style="font-size:36px; font-weight:bold; letter-spacing:10px; text-align:center; color:#1e3a8a; background:white; padding:20px; border-radius:8px; margin:15px 0;">
+                ${otp}
             </div>
-        `
-    };
-    await transporter.sendMail(mailOptions);
+            <p style="color:#666; font-size:13px;">This OTP expires in <strong>10 minutes</strong>.</p>
+            <p style="color:#666; font-size:13px;">If you didn't request this, ignore this email.</p>
+        </div>
+    `;
+
+    const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            from: 'Study Zone <onboarding@resend.dev>',
+            to: email,
+            subject: 'Study Zone — Email Verification OTP',
+            html: htmlContent
+        })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Resend API Error:", errorData);
+        throw new Error(errorData.message || "Failed to send email via Resend");
+    }
 };
 
 /* ========================
@@ -288,26 +291,41 @@ export const forgotPassword = asyncHandler(async (req, res) => {
 
     const resetUrl = `${process.env.CORS_ORIGIN}/reset-password?token=${resetToken}&email=${user.email}`;
 
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: user.email,
-        subject: "Study Zone — Password Reset Request",
-        html: `
-            <div style="font-family:Arial,sans-serif; max-width:500px; margin:auto; padding:20px; background:#f4f4f4; border-radius:10px;">
-                <h2 style="color:#1e3a8a;">Study Zone Password Reset</h2>
-                <p>Hi <strong>${user.name}</strong>,</p>
-                <p>Click the button below to reset your password:</p>
-                <a href="${resetUrl}" style="display:inline-block; padding:12px 24px; background:#1e3a8a; color:white; text-decoration:none; border-radius:8px; font-weight:bold; margin:15px 0;">
+    const htmlContent = `
+        <div style="font-family:Arial,sans-serif; max-width:500px; margin:auto; padding:20px; background:#f4f4f4; border-radius:10px;">
+            <h2 style="color:#1e3a8a;">Study Zone Password Reset</h2>
+            <p>Hi <strong>${user.name}</strong>,</p>
+            <p>You requested to reset your password. Click the button below to reset it:</p>
+            <div style="text-align:center; margin:25px 0;">
+                <a href="${resetUrl}" style="background:#0cdcf7; color:#111; padding:12px 25px; text-decoration:none; font-weight:bold; border-radius:5px; font-size:16px;">
                     Reset Password
                 </a>
-                <p style="color:#666; font-size:13px;">Expires in <strong>15 minutes</strong>.</p>
-                <p style="color:#666; font-size:13px;">If you didn't request this, ignore this email.</p>
             </div>
-        `
-    };
+            <p style="color:#666; font-size:13px;">This link expires in <strong>15 minutes</strong>.</p>
+            <p style="color:#666; font-size:13px;">If you didn't request this, you can safely ignore this email.</p>
+        </div>
+    `;
 
     try {
-        await transporter.sendMail(mailOptions);
+        const response = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                from: 'Study Zone <onboarding@resend.dev>',
+                to: user.email,
+                subject: 'Study Zone — Password Reset',
+                html: htmlContent
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Resend API Error (Forgot Password):", errorData);
+            throw new Error(errorData.message || "Failed to send email via Resend");
+        }
     } catch (err) {
         user.resetPasswordToken = null;
         user.resetPasswordExpires = null;
