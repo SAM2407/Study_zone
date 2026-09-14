@@ -11,13 +11,31 @@ const app = express();
 /* -------------------- MIDDLEWARES -------------------- */
 
 // CORS Configuration
+const allowedOrigins = [
+    process.env.FRONTEND_URL || "http://localhost:5173",
+    "http://localhost:5173",
+    "http://localhost:4173"
+];
+
 app.use(
     cors({
-        origin:process.env.CROS_ORIGIN ||"*",
-        credentials:true,
+        origin: (origin, callback) => {
+            // Allow requests with no origin (mobile apps, curl, Render health checks)
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error(`CORS blocked: ${origin}`));
+            }
+        },
+        credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     })
 );
+
+// Health check — Render pings this to keep service alive
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
  
 // Body Parser Middleware
 app.use(express.json({limit:"10mb"}));
