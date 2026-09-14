@@ -167,7 +167,12 @@ const JoinMeeting = () => {
     };
 
     const setupSocket = (isHostUser) => {
-        const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
+        // Strip '/api' from the URL because Socket.io needs the root URL, 
+        // otherwise it tries to connect to an '/api' namespace and fails.
+        const rawUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const socketUrl = rawUrl.replace(/\/api\/?$/, '');
+        
+        const socket = io(socketUrl);
         socketRef.current = socket;
 
         socket.on('connect', () => {
